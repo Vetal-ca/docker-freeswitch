@@ -1,0 +1,24 @@
+A /etc/freeswitch/*
+A /run/freeswitch/
+
+A /usr/bin/freeswitch
+A /usr/bin/fs_cli
+A /usr/bin/fs_encode
+A /usr/bin/fs_ivrd
+A /usr/bin/fsxs
+A /usr/bin/gentls_cert
+A /usr/bin/switch_core
+A /usr/bin/switch_event
+A /usr/bin/switch_hash
+A /usr/bin/switch_ivr_originate
+A /usr/bin/switch_utils
+A /usr/bin/tone2wav
+
+A /usr/include/freeswitch/*
+A /usr/lib/freeswitch/*
+A /usr/lib/libfreeswitch.*
+A /usr/lib/pkgconfig/freeswitch.pc
+A /usr/share/freeswitch/*
+A /var/log/freeswitch/*
+
+

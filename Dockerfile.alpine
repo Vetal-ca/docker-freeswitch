@@ -1,0 +1,61 @@
+MAINTAINER "Vitali Khlebko vitali.khlebko@vetal.ca"
+FROM alpine:3.10 as build
+
+ENV FS_VERSION=v1.10
+ENV FS_TAG=v1.10.1
+
+# Hand-checked packages
+# RUN apk update && apk add git automake autoconf  libtool alpine-sdk \
+#      zlib-dev jpeg-dev sqlite-dev curl-dev pcre-dev speex-dev speexdsp-dev ldns-dev libedit-dev tiff-dev \
+#      yasm bsd-compat-headers unixodbc-dev libuuid libpq opus-dev \
+RUN apk update && apk add git automake autoconf  libtool alpine-sdk \
+    zlib-dev jpeg-dev sqlite-dev curl-dev pcre-dev speex-dev speexdsp-dev ldns-dev libedit-dev tiff-dev \
+    yasm bsd-compat-headers unixodbc-dev libuuid libpq opus-dev \
+	coreutils db-dev flac-dev flite-dev gdbm-dev gnutls-dev ilbc-dev lame-dev libexecinfo-dev libjpeg-turbo-dev \
+	libogg-dev libpri-dev libressl-dev libshout-dev libsndfile-dev libvorbis-dev linux-headers lua5.2-dev \
+	mpg123-dev ncurses-dev net-snmp-dev perl-dev portaudio-dev postgresql-dev sngtc_client-dev util-linux-dev \
+	xmlrpc-c-dev php7-dev erlang-dev
+
+#bash
+#     git clone -b ${FS_VERSION} https://freeswitch.org/stash/scm/fs/freeswitch.git freeswitch &&\
+#    git config pull.rebase true &&\
+
+ADD *.patch /tmp/
+
+# https://freeswitch.org/confluence/display/FREESWITCH/Debian+8+Jessie#Debian8Jessie-BuildingFromSource
+RUN cd /tmp  &&\
+    git clone https://github.com/signalwire/freeswitch.git freeswitch &&\
+    cd freeswitch &&\
+    git checkout ${FS_TAG} &&\
+    git config pull.rebase true &&\
+    git apply /tmp/signalwire-disabled.patch &&\
+    git apply /tmp/custom-modules.patch &&\
+    git apply /tmp/libvpx.patch &&\
+    rm /tmp/*.patch &&\
+    ./bootstrap.sh -j &&\
+    ./configure  --enable-portable-binary \
+                 --prefix=/usr --localstatedir=/var --sysconfdir=/etc \
+                 --with-gnu-ld --with-erlang --with-openssl \
+                 --enable-core-odbc-support --enable-zrtp \
+                 --enable-core-pgsql-support &&\
+    make && make install
+
+FROM alpine:3.10
+
+RUN apk update && apk add libpq libuuid sqlite-dev curl-dev pcre-dev speex-dev speexdsp-dev libedit-dev unixodbc-dev \
+    jpeg-dev opus-dev tiff-dev libsndfile-dev lua5.2-dev ldns-dev ilbc
+
+#COPY --from=build /etc/freeswitch /etc/freeswitch
+COPY --from=build /run/freeswitch /run/freeswitch
+
+COPY --from=build ["/usr/bin/freeswitch", "/usr/bin/fs_cli", "/usr/bin/fs_encode", "/usr/bin/fs_ivrd", \
+    "/usr/bin/fsxs", "/usr/bin/gentls_cert", "/usr/bin/fs_tts", "/usr/bin/tone2wav", "/usr/bin/"]
+
+COPY --from=build /usr/include/freeswitch /usr/include/freeswitch
+COPY --from=build /usr/lib/freeswitch /usr/lib/freeswitch
+COPY --from=build /usr/lib/libfreeswitch.* /usr/lib/
+COPY --from=build /usr/lib/pkgconfig/freeswitch.pc /usr/lib/pkgconfig/
+COPY --from=build /usr/share/freeswitch /usr/share/freeswitch
+COPY --from=build /var/log/freeswitch /var/log/freeswitch
+
+ENTRYPOINT ["/usr/bin/freeswitch"]

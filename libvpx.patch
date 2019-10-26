@@ -1,0 +1,14 @@
+diff --git a/libs/libvpx/configure b/libs/libvpx/configure
+index e5a74c6f2a..c6c7773e66 100755
+--- a/libs/libvpx/configure
++++ b/libs/libvpx/configure
+@@ -170,7 +170,8 @@ for t in ${all_targets}; do
+     [ -f "${source_path}/${t}.mk" ] && enable_feature ${t}
+ done
+ 
+-if ! diff --version >/dev/null; then
++# Make it work in Alpine
++if ! diff configure configure >/dev/null; then
+   die "diff missing: Try installing diffutils via your package manager."
+ fi
+ 
