@@ -1,5 +1,6 @@
-MAINTAINER "Vitali Khlebko vitali.khlebko@vetal.ca"
 FROM alpine:3.10 as build
+MAINTAINER "Vitali Khlebko vitali.khlebko@vetal.ca"
+
 
 ENV FS_VERSION=v1.10
 ENV FS_TAG=v1.10.1
