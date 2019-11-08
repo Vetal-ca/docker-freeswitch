@@ -1,7 +1,7 @@
 FROM alpine:3.10
 MAINTAINER "Vitali Khlebko vitali.khlebko@vetal.ca"
 
-RUN apk update && apk add freeswitch-sounds-ru-RU-elena-32000 && mkdir /mounts/ && mkdir /scripts
+RUN apk update && apk add freeswitch-sounds-ru-RU-elena-32000 && mkdir -p /mounts && mkdir /scripts
 
 ENTRYPOINT ["/bin/sh"]
 
@@ -10,4 +10,4 @@ ADD mount.sh /scripts/
 #  docker run -d --name fs-snd --cap-add=SYS_ADMIN --security-opt apparmor:unconfined vetalca/freeswitch-sounds-ru:1.0.12-r1
 
 
-CMD ["-c", "/scripts/mount.sh /usr/share/freeswitch/sounds/ru /mounts/ru"]
+CMD ["-c", "/scripts/mount.sh /usr/share/freeswitch/sounds/ /mounts/common /mounts/merged"]
