@@ -1,0 +1,4 @@
+FROM alpine:3.10
+MAINTAINER "Vitali Khlebko vitali.khlebko@vetal.ca"
+
+RUN apk update && apk add freeswitch-sounds-music-32000
