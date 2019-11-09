@@ -7,7 +7,4 @@ ENTRYPOINT ["/bin/sh"]
 
 ADD copy_data.sh /scripts/
 
-#  docker run -d --name fs-snd --cap-add=SYS_ADMIN --security-opt apparmor:unconfined vetalca/freeswitch-sounds-ru:1.0.12-r1
-
-
 CMD ["-c", "/scripts/copy_data.sh"]

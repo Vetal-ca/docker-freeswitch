@@ -1,4 +1,10 @@
 FROM alpine:3.10
 MAINTAINER "Vitali Khlebko vitali.khlebko@vetal.ca"
 
-RUN apk update && apk add freeswitch-sounds-music-32000
+RUN apk update && apk add freeswitch-sounds-music-32000 && mkdir -p /sounds && mkdir /scripts
+
+ENTRYPOINT ["/bin/sh"]
+
+ADD copy_data.sh /scripts/
+
+CMD ["-c", "/scripts/copy_data.sh"]
