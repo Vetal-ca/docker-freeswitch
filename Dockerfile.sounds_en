@@ -1,7 +1,7 @@
 FROM alpine:3.10
 MAINTAINER "Vitali Khlebko vitali.khlebko@vetal.ca"
 
-RUN apk update && apk add freeswitch-sounds-en-us-callie-32000 && mkdir -p /sounds && mkdir /scripts
+RUN apk update && apk add freeswitch-sounds-en-us-callie-8000 && mkdir -p /sounds && mkdir /scripts
 
 ENTRYPOINT ["/bin/sh"]
 
