@@ -1,4 +1,4 @@
-FROM vetalca/freeswitch-alpine:1.10.1
+FROM vetalca/freeswitch-alpine:1.10.3
 
 RUN apk update &&\
 	apk add freeswitch-sounds-en-us-callie-32000 \
