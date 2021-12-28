@@ -1,9 +1,9 @@
-FROM alpine:3.11 as build
+FROM alpine:3.15 as build
 MAINTAINER "Vitali Khlebko vitali.khlebko@vetal.ca"
 
 
 ENV FS_VERSION=v1.10
-ENV FS_TAG=v1.10.3
+ENV FS_TAG=v1.10.7
 
 # Hand-checked packages
 # RUN apk update && apk add git automake autoconf  libtool alpine-sdk \
@@ -41,10 +41,10 @@ RUN cd /tmp  &&\
                  --enable-core-pgsql-support &&\
     make && make install
 
-FROM alpine:3.11
+FROM alpine:3.15
 
 RUN apk update && apk add libpq libuuid sqlite-dev curl-dev pcre-dev speex-dev speexdsp-dev libedit-dev unixodbc-dev \
-    jpeg-dev opus-dev tiff-dev libsndfile-dev lua5.2-dev ldns-dev ilbc
+    jpeg-dev opus-dev tiff-dev libsndfile-dev lua5.2-dev ldns-dev ilbc && rm -rf /var/cache/apk/*
 
 #COPY --from=build /etc/freeswitch /etc/freeswitch
 COPY --from=build /run/freeswitch /run/freeswitch
