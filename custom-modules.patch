@@ -1,7 +1,6 @@
 diff --git a/build/modules.conf.in b/build/modules.conf.in
-index 14ad5dd080..96268ca63e 100644
---- a/build/modules.conf.in
-+++ b/build/modules.conf.in
+--- a/build/modules.conf.in	(revision f1fb05214e4f427dcf922f531431ab649cf0622b)
++++ b/build/modules.conf.in	(date 1696655790890)
 @@ -1,5 +1,5 @@
  #applications/mod_abstraction
 -applications/mod_av
@@ -9,7 +8,7 @@ index 14ad5dd080..96268ca63e 100644
  #applications/mod_avmd
  #applications/mod_bert
  #applications/mod_blacklist
-@@ -8,7 +8,7 @@ applications/mod_av
+@@ -8,7 +8,7 @@
  #applications/mod_cluechoo
  applications/mod_commands
  applications/mod_conference
@@ -18,7 +17,7 @@ index 14ad5dd080..96268ca63e 100644
  #applications/mod_cv
  applications/mod_db
  #applications/mod_directory
-@@ -71,7 +71,7 @@ codecs/mod_b64
+@@ -71,7 +71,7 @@
  codecs/mod_g723_1
  codecs/mod_g729
  codecs/mod_h26x
@@ -27,7 +26,16 @@ index 14ad5dd080..96268ca63e 100644
  #codecs/mod_isac
  #codecs/mod_mp4v
  codecs/mod_opus
-@@ -155,14 +155,14 @@ say/mod_say_en
+@@ -96,7 +96,7 @@
+ #endpoints/mod_rtmp
+ endpoints/mod_skinny
+ endpoints/mod_sofia
+-endpoints/mod_verto
++#endpoints/mod_verto
+ #event_handlers/mod_amqp
+ event_handlers/mod_cdr_csv
+ #event_handlers/mod_cdr_mongodb
+@@ -155,14 +155,14 @@
  #say/mod_say_nl
  #say/mod_say_pl
  #say/mod_say_pt
