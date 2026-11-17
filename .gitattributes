@@ -1,0 +1,4 @@
+# Line endings: LF in git and on disk, regardless of core.autocrlf
+* text=auto eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
